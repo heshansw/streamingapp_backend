@@ -1,29 +1,21 @@
 package api
 
 import (
-	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-var jwtKey = []byte("your_secret_key")
+func New() http.Handler {
+	router := mux.NewRouter()
 
-type Claims struct {
-	Username string `json:"username"`
-	jwt.StandardClaims
-}
+	router.HandleFunc("/users", GetAllUsers).Methods("GET")
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintln(w, "User created successfully")
-}
+	//router.HandleFunc("/quests", GetAllQuests).Methods("GET")
+	//router.HandleFunc("/quest/{id}",GetQuest).Methods("GET")
+	//router.HandleFunc("/quest", CreateQuest).Methods("POST")
+	//router.HandleFunc("/quest/{id}", UpdateQuest).Methods("PUT")
+	//router.HandleFunc("/quest/{id}", DeleteQuest).Methods("DELETE")
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(tokenString))
-}
-
-func validateCredentials(username, password string) bool {
-	// ... (unchanged)
-
-	return err == nil
+	return router
 }

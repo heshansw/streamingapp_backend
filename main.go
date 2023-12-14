@@ -1,16 +1,23 @@
 package main
 
 import (
-	"fmt"
+	"backendapi/api"
+	"backendapi/models"
 	"net/http"
+
+	"github.com/joho/godotenv"
 )
 
-func mainHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World!")
-}
-
 func main() {
-	http.HandleFunc("/hello", mainHandler)
-	fmt.Println("Server is running on :8080")
-	http.ListenAndServe(":8080", nil)
+	godotenv.Load()
+
+	handler := api.New()
+
+	server := &http.Server{
+		Addr:    "0.0.0.0:8008",
+		Handler: handler,
+	}
+
+	models.ConnectDatabase()
+	server.ListenAndServe()
 }
