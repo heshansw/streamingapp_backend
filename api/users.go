@@ -14,7 +14,7 @@ import (
 )
 
 var validate *validator.Validate
-var jwtKey = []byte("secret")
+var jwtKey = []byte("secr")
 
 type Credentials struct {
 	Password string `json:"password"`
